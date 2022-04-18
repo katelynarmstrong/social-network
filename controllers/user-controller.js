@@ -43,6 +43,25 @@ const userController = {
         })
     },
 
+    deleteUser(req, res) {
+        User.findOneAndDelete(
+            {_id: req.params.userId},
+        )
+        .then((dbUser) => {
+            if (!dbUser) {
+                return res.json({message: "User does not exist"})
+            }
+            res.json(dbUser)
+        })
+    },
+
+    addFriend(req, res) {
+
+    
+    },
+
+    removeFriend(req,res) {}
+
 }
 
 module.exports = userController
