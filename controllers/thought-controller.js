@@ -29,8 +29,8 @@ const thoughtController = {
       .then((data) => res.json(data));
   },
 
-  getThoughtById({ params }, res) {
-    Thought.findOne({ _id: params.thoughtId }).then((data) => {
+  getThoughtById(req, res) {
+    Thought.findOne({ _id: req.params.thoughtId }).then((data) => {
       if (!data) {
         res
           .status(404)
@@ -41,8 +41,8 @@ const thoughtController = {
     });
   },
 
-  updateThought({ params, body }, res) {
-    Thought.findOneAndUpdate({ _id: params.thoughtId }, body, {
+  updateThought({ req, body }, res) {
+    Thought.findOneAndUpdate({ _id: req.params.thoughtId }, body, {
       new: true,
       runValidators: true,
     }).then((data) => {
@@ -56,8 +56,8 @@ const thoughtController = {
     });
   },
 
-  deleteThought({ params }, res) {
-    Thought.findOneAndDelete({ _id: params.thoughtId }).then((data) => {
+  deleteThought(req, res) {
+    Thought.findOneAndDelete({ _id: req.params.thoughtId }).then((data) => {
       if (!data) {
         res
           .status(404)
@@ -84,10 +84,10 @@ const thoughtController = {
     });
   },
 
-  deleteReaction({ params }, res) {
+  deleteReaction(req, res) {
     Thought.findOneAndUpdate(
-      { _id: params.thoughtId },
-      { $pull: { reactions: { reactionId: params.reactionId } } },
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: { reactionId: req.params.reactionId } } },
       { new: true }
     ).then((data) => {
       if (!data) {
