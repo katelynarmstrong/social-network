@@ -41,11 +41,12 @@ const thoughtController = {
     });
   },
 
-  updateThought({ req, body }, res) {
-    Thought.findOneAndUpdate({ _id: req.params.thoughtId }, body, {
-      new: true,
-      runValidators: true,
-    }).then((data) => {
+  updateThought(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId }, 
+      { $set: req.body},
+      { new: true, runValidators: true}
+    ).then((data) => {
       if (!data) {
         res
           .status(404)
